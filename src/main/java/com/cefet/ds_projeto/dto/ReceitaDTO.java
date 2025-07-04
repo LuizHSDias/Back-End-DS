@@ -44,6 +44,7 @@ public class ReceitaDTO {
         return dataEntrada;
     }
 
+    
     public Double getValor() {
         return valor;
     }
