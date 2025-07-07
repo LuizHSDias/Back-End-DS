@@ -1,6 +1,8 @@
 package com.cefet.ds_projeto.dto;
 
+import com.cefet.ds_projeto.entities.NivelAcesso;
 import com.cefet.ds_projeto.entities.Usuario;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -21,7 +23,11 @@ public class UsuarioDTO {
     private String login;
 
     @Schema(description = "Senha do usuário", example = "123456")
+    // Impede que a Senha seja Exposta
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
+
+    private NivelAcesso nivelAcesso;
     
     public UsuarioDTO() {
     }
@@ -32,6 +38,7 @@ public class UsuarioDTO {
         this.email = usuario.getEmail();
         this.login = usuario.getLogin();
         this.senha = usuario.getSenha();
+        this.nivelAcesso = usuario.getNivelAcesso();
     }
 
     public Long getId() {
@@ -53,4 +60,8 @@ public class UsuarioDTO {
     public String getSenha() {
         return senha;
     }
+
+    public NivelAcesso getNivelAcesso() {
+		return nivelAcesso;
+	}  
 }

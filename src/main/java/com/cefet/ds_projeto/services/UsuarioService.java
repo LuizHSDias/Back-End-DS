@@ -1,9 +1,9 @@
 package com.cefet.ds_projeto.services;
 
-import java.security.SecureRandom;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cefet.ds_projeto.dto.UsuarioDTO;
@@ -18,19 +18,10 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 
-	// Gerador de senha aleatória segura
-	private String gerarSenha(int tamanho) {
-		String alfabeto = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
-		SecureRandom random = new SecureRandom();
-		StringBuilder senha = new StringBuilder();
-		for (int i = 0; i < tamanho; i++) {
-			int index = random.nextInt(alfabeto.length());
-			senha.append(alfabeto.charAt(index));
-		}
-		return senha.toString();
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-	// Buscar todos
+	// Listar
 	public List<UsuarioDTO> findAll() {
 		List<Usuario> listaUsuarios = usuarioRepository.findAll();
 		return listaUsuarios.stream().map(UsuarioDTO::new).toList();
@@ -60,7 +51,9 @@ public class UsuarioService {
 		usuario.setNome(usuarioDTO.getNome());
 		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setLogin(usuarioDTO.getLogin());
-		usuario.setSenha(gerarSenha(10));
+		usuario.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
+		usuario.setNivelAcesso(usuarioDTO.getNivelAcesso());
+
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
 		return new UsuarioDTO(usuarioSalvo);
 	}
@@ -69,18 +62,10 @@ public class UsuarioService {
 	public UsuarioDTO update(Long id, UsuarioDTO usuarioDTO) {
 		Usuario usuario = usuarioRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + id));
-        
-		// Garante que o Email não seja alterado, caso não seja informado
-		if (!usuario.getEmail().equals(usuarioDTO.getEmail())) {
-			throw new IllegalArgumentException("Não é permitido alterar o email");
-		}
-
-		// Garante que o Login não seja alterado, caso não seja informado
-		if (!usuario.getLogin().equals(usuarioDTO.getLogin())) {
-			throw new IllegalArgumentException("Não é permitido alterar o login");
-		}
 
 		usuario.setNome(usuarioDTO.getNome());
+		usuario.setSenha(usuarioDTO.getSenha());
+
 		Usuario usuarioAtualizado = usuarioRepository.save(usuario);
 		return new UsuarioDTO(usuarioAtualizado);
 	}
@@ -94,12 +79,12 @@ public class UsuarioService {
 	}
 
 	// Verificar Email
-	public boolean emailExiste(String email) {
+	public boolean existsByEmail(String email) {
 		return usuarioRepository.existsByEmail(email);
 	}
 
 	// Verificar Login
-	public boolean loginExiste(String login) {
+	public boolean existsByLogin(String login) {
 		return usuarioRepository.existsByLogin(login);
 	}
 

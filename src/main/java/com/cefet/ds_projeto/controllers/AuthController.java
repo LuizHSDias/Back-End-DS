@@ -26,7 +26,7 @@ public class AuthController {
     @Autowired
     JwtTokenProvider tokenProvider; 
     
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO){
         
         Authentication authentication = authenticationManager.authenticate(
@@ -37,6 +37,7 @@ public class AuthController {
         );
         
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        
         String jwt = tokenProvider.generateToken(authentication);
         return ResponseEntity.ok(new JwtAuthenticationDTO(jwt));
     }

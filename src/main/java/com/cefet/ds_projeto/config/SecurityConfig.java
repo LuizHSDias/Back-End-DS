@@ -13,6 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.cefet.ds_projeto.security.JwtAuthenticationFilter;
 import com.cefet.ds_projeto.services.UsuarioDetailsService;
@@ -31,44 +33,38 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf
-                .ignoringRequestMatchers("/h2-console/**", "/usuarios/**", "/auth/login") // Ignora CSRF para esses endpoints
-            )
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Libera acesso ao H2 Console e Swagger
-                .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-
-                // Libera cadastro e login
-                .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-
-                // Usuários
-                .requestMatchers(HttpMethod.GET, "/usuarios").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/usuarios/{id}").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/usuarios/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/usuarios/**").hasRole("ADMIN")
-
-                // Despesas
-                .requestMatchers(HttpMethod.GET, "/despesas").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/despesas/{id}").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/despesas").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/despesas/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/despesas/**").hasAnyRole("USER", "ADMIN")
-
-                // Receitas
-                .requestMatchers(HttpMethod.GET,"/receitas").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/receitas/{id}").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/receitas").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/receitas/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/receitas/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/h2-console/**").permitAll() // Acessa ao H2 Console
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Acessa ao Swagger UI
+                .requestMatchers(HttpMethod.POST, "/auth").permitAll() // Permitir login de usuário
 
                 // Categorias
-                .requestMatchers(HttpMethod.GET, "/categorias").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/categorias/{id}").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/categorias").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/categorias/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/categorias/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/categorias").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
+                .requestMatchers(HttpMethod.GET, "/categorias/{id}").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
+                .requestMatchers(HttpMethod.POST, "/categorias").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
+                .requestMatchers(HttpMethod.PUT, "/categorias/**").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
+                .requestMatchers(HttpMethod.DELETE, "/categorias/**").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
+
+                // Despesas
+                .requestMatchers(HttpMethod.GET, "/despesas").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.GET, "/despesas/{id}").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.POST, "/despesas").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.PUT, "/despesas/**").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.DELETE, "/despesas/**").hasAnyRole("NIVEL1", "NIVEL2")
+
+                // Receitas
+                .requestMatchers(HttpMethod.GET,"/receitas").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.GET, "/receitas/{id}").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.POST, "/receitas").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.PUT, "/receitas/**").hasAnyRole("NIVEL1", "NIVEL2")
+                .requestMatchers(HttpMethod.DELETE, "/receitas/**").hasAnyRole("NIVEL1", "NIVEL2")
+
+
+                 // Usuários
+                .requestMatchers(HttpMethod.GET, "/despesas").hasAnyRole("NIVEL1")
+                .requestMatchers(HttpMethod.GET, "/despesas/{id}").hasAnyRole("NIVEL1")
+                 .requestMatchers(HttpMethod.POST, "/despesas").hasAnyRole("NIVEL1")
 
                 // Qualquer outra requisição precisa de autenticação
                 .anyRequest().authenticated()
@@ -97,4 +93,18 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
+     @Bean
+	  public WebMvcConfigurer corsConfigurer() {
+	    return new WebMvcConfigurer() {
+	      @Override
+	      public void addCorsMappings(CorsRegistry registry) {
+	        registry.addMapping("/**")
+	          .allowedOrigins("http://localhost:4200")
+	          .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+	          .allowedHeaders("*")
+	          .allowCredentials(true);
+	      }
+	    };
+	  }  
 }

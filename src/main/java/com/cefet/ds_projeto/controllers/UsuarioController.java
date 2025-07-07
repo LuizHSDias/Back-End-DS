@@ -4,11 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,6 +56,7 @@ public class UsuarioController {
 	return ResponseEntity.status(201).body(novoUsuario);
 	}
 	
+	/*
 	@PutMapping("/{id}")
 	 @Operation(summary = "Atualizar usuário", description = "Atualiza os dados de um usuário existente com base no ID.")
 	public ResponseEntity<UsuarioDTO> update(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
@@ -73,22 +72,23 @@ public class UsuarioController {
 	usuarioService.delete(id);
 	return ResponseEntity.noContent().build();
 	}
+	 */
 	
 	@GetMapping("/existe-email")
 	@Operation(summary = "Verificar existência de e-mail", description = "Verifica se um determinado e-mail já está cadastrado no sistema.")
-	public ResponseEntity<Boolean> emailExiste(
+	public ResponseEntity<Boolean> existsByEmail(
 		@Parameter(description = "E-mail a ser verificado", example = "usuario@email.com")
 		@RequestParam String email){
-		Boolean resultado = usuarioService.emailExiste(email);
+		Boolean resultado = usuarioService.existsByEmail(email);
 		return ResponseEntity.ok(resultado);
 	}
 
 	@GetMapping("/existe-login")
 	@Operation(summary = "Verificar existência de login", description = "Verifica se um determinado login já está cadastrado no sistema.")
-	public ResponseEntity<Boolean> loginExiste(
+	public ResponseEntity<Boolean> existsByLogin(
 		@Parameter(description = "Login a ser verificado", example = "usuario123")
 		@RequestParam String login){
-		Boolean resultado = usuarioService.loginExiste(login);
+		Boolean resultado = usuarioService.existsByLogin(login);
 		return ResponseEntity.ok(resultado);
 	}
 }
