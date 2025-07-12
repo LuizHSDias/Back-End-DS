@@ -73,17 +73,8 @@ public class UsuarioController {
 	return ResponseEntity.noContent().build();
 	}
 	 */
-	
-	@GetMapping("/existe-email")
-	@Operation(summary = "Verificar existência de e-mail", description = "Verifica se um determinado e-mail já está cadastrado no sistema.")
-	public ResponseEntity<Boolean> existsByEmail(
-		@Parameter(description = "E-mail a ser verificado", example = "usuario@email.com")
-		@RequestParam String email){
-		Boolean resultado = usuarioService.existsByEmail(email);
-		return ResponseEntity.ok(resultado);
-	}
 
-	@GetMapping("/existe-login")
+	@GetMapping("/existe")
 	@Operation(summary = "Verificar existência de login", description = "Verifica se um determinado login já está cadastrado no sistema.")
 	public ResponseEntity<Boolean> existsByLogin(
 		@Parameter(description = "Login a ser verificado", example = "usuario123")

@@ -37,23 +37,25 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll() // Acessa ao H2 Console
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Acessa ao Swagger UI
-                .requestMatchers(HttpMethod.POST, "/auth").permitAll() // Permitir login de usuário
+                
+               .requestMatchers(HttpMethod.POST, "/auth").permitAll() // Permitir login de usuário
 
-                // Categorias
+
+                // Regras de Autorização para Categorias
                 .requestMatchers(HttpMethod.GET, "/categorias").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
                 .requestMatchers(HttpMethod.GET, "/categorias/{id}").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
                 .requestMatchers(HttpMethod.POST, "/categorias").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
                 .requestMatchers(HttpMethod.PUT, "/categorias/**").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
                 .requestMatchers(HttpMethod.DELETE, "/categorias/**").hasAnyRole("NIVEL1", "NIVEL2", "NIVEL3")
 
-                // Despesas
+                // Regras de Autorização para Despesas
                 .requestMatchers(HttpMethod.GET, "/despesas").hasAnyRole("NIVEL1", "NIVEL2")
                 .requestMatchers(HttpMethod.GET, "/despesas/{id}").hasAnyRole("NIVEL1", "NIVEL2")
                 .requestMatchers(HttpMethod.POST, "/despesas").hasAnyRole("NIVEL1", "NIVEL2")
                 .requestMatchers(HttpMethod.PUT, "/despesas/**").hasAnyRole("NIVEL1", "NIVEL2")
                 .requestMatchers(HttpMethod.DELETE, "/despesas/**").hasAnyRole("NIVEL1", "NIVEL2")
 
-                // Receitas
+                // Regras de Autorização para Receitas
                 .requestMatchers(HttpMethod.GET,"/receitas").hasAnyRole("NIVEL1", "NIVEL2")
                 .requestMatchers(HttpMethod.GET, "/receitas/{id}").hasAnyRole("NIVEL1", "NIVEL2")
                 .requestMatchers(HttpMethod.POST, "/receitas").hasAnyRole("NIVEL1", "NIVEL2")
@@ -61,7 +63,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/receitas/**").hasAnyRole("NIVEL1", "NIVEL2")
 
 
-                 // Usuários
+                 // Regras de Autorização para Usuários
                 .requestMatchers(HttpMethod.GET, "/despesas").hasAnyRole("NIVEL1")
                 .requestMatchers(HttpMethod.GET, "/despesas/{id}").hasAnyRole("NIVEL1")
                  .requestMatchers(HttpMethod.POST, "/despesas").hasAnyRole("NIVEL1")

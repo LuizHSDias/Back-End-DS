@@ -1,7 +1,7 @@
-INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('Luiz Henrique', 'Luiz@gmail.com', 'Luiz', 'OD6jdnc@!', 'NIVEL1');
-INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('Pedro Lucas', 'Pedro@gmail.com', 'Pedro', 'JJHH847&@', 'NIVEL2');
-INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('Maria Helena', 'Maria@gmail.com','Maria', 'ODIDE535$', 'NIVEL2');
-INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('José Germano', 'Jose@gmail.com', 'Jose',  'OD6fiUnc@!','NIVEL3');
+INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('Luiz Henrique', 'Luiz@gmail.com', 'luiz', '$2a$10$ZQDZDXqV/LKQTq13NKJ2aeUmrxV787/U1BSEfXS.pGPu0Sd9CgYX6', 'NIVEL1');
+INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('Pedro Lucas', 'Pedro@gmail.com', 'pedro', '$2a$10$ZQDZDXqV/LKQTq13NKJ2aeUmrxV787/U1BSEfXS.pGPu0Sd9CgYX6', 'NIVEL2');
+INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('Maria Helena', 'Maria@gmail.com','maria', '$2a$10$ZQDZDXqV/LKQTq13NKJ2aeUmrxV787/U1BSEfXS.pGPu0Sd9CgYX6', 'NIVEL2');
+INSERT INTO tb_usuario(nome, email, login, senha, nivel_acesso) VALUES ('José Germano', 'Jose@gmail.com', 'jose',  '$2a$10$ZQDZDXqV/LKQTq13NKJ2aeUmrxV787/U1BSEfXS.pGPu0Sd9CgYX6','NIVEL3');
 
 INSERT INTO tb_categoria(descricao, tipo) VALUES ('Contas residenciais', 'Fixa');
 INSERT INTO tb_categoria(descricao, tipo) VALUES ('Moradia', 'Fixa');

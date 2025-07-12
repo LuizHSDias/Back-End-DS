@@ -21,6 +21,10 @@ public class UsuarioService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	public UsuarioService(){
+		
+	}
+
 	// Listar
 	public List<UsuarioDTO> findAll() {
 		List<Usuario> listaUsuarios = usuarioRepository.findAll();
@@ -36,11 +40,6 @@ public class UsuarioService {
 
 	// Inserir Usuário
 	public UsuarioDTO insert(UsuarioDTO usuarioDTO) {
-
-		// Verifica se já existe email 
-		if (usuarioRepository.existsByEmail(usuarioDTO.getEmail())) {
-			throw new IllegalArgumentException("Email já está em uso.");
-		}
 
 		// Verifica se já existe login
 		if (usuarioRepository.existsByLogin(usuarioDTO.getLogin())) {
@@ -76,11 +75,6 @@ public class UsuarioService {
 			throw new EntityNotFoundException("Usuário não encontrado com ID " + id);
 		}
 		usuarioRepository.deleteById(id);
-	}
-
-	// Verificar Email
-	public boolean existsByEmail(String email) {
-		return usuarioRepository.existsByEmail(email);
 	}
 
 	// Verificar Login
