@@ -32,6 +32,8 @@ public class Usuario {
     @Column(name = "nivel_acesso", nullable = false)
     private NivelAcesso nivelAcesso;
 
+    private String urlImagem;
+
 
     public Usuario() {
     }
@@ -43,6 +45,7 @@ public class Usuario {
         this.login = login;
         this.senha = senha;
         this.nivelAcesso = nivelAcesso;
+         this.urlImagem = urlImagem;
     }
 
     public Long getId() {
@@ -92,4 +95,12 @@ public class Usuario {
     public void setNivelAcesso(NivelAcesso nivelAcesso) {
         this.nivelAcesso = nivelAcesso;
     }
+
+    public String getUrlImagem() {
+		return urlImagem;
+	}
+
+	public void setUrlImagem(String urlImagem) {
+		this.urlImagem = urlImagem;
+	}  
 }

@@ -28,6 +28,8 @@ public class UsuarioDTO {
     private String senha;
 
     private NivelAcesso nivelAcesso;
+
+    private String urlImagem;
     
     public UsuarioDTO() {
     }
@@ -39,6 +41,7 @@ public class UsuarioDTO {
         this.login = usuario.getLogin();
         this.senha = usuario.getSenha();
         this.nivelAcesso = usuario.getNivelAcesso();
+         this.urlImagem = usuario.getUrlImagem();
     }
 
     public Long getId() {
@@ -63,5 +66,9 @@ public class UsuarioDTO {
 
     public NivelAcesso getNivelAcesso() {
 		return nivelAcesso;
+	}  
+
+    public String getUrlImagem() {
+		return urlImagem;
 	}  
 }

@@ -52,6 +52,7 @@ public class UsuarioService {
 		usuario.setLogin(usuarioDTO.getLogin());
 		usuario.setSenha(passwordEncoder.encode(usuarioDTO.getSenha()));
 		usuario.setNivelAcesso(usuarioDTO.getNivelAcesso());
+		usuario.setUrlImagem(usuarioDTO.getUrlImagem());
 
 		Usuario usuarioSalvo = usuarioRepository.save(usuario);
 		return new UsuarioDTO(usuarioSalvo);
@@ -63,6 +64,7 @@ public class UsuarioService {
 				.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " + id));
 
 		usuario.setNome(usuarioDTO.getNome());
+		usuario.setEmail(usuarioDTO.getEmail());
 		usuario.setSenha(usuarioDTO.getSenha());
 
 		Usuario usuarioAtualizado = usuarioRepository.save(usuario);

@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cefet.ds_projeto.dto.DespesaDTO;
-import com.cefet.ds_projeto.entities.Categoria;
+// import com.cefet.ds_projeto.entities.Categoria;
 import com.cefet.ds_projeto.entities.Despesa;
-import com.cefet.ds_projeto.entities.Usuario;
-import com.cefet.ds_projeto.repositories.CategoriaRepository;
+// import com.cefet.ds_projeto.entities.Usuario;
+// import com.cefet.ds_projeto.repositories.CategoriaRepository;
 import com.cefet.ds_projeto.repositories.DespesaRepository;
-import com.cefet.ds_projeto.repositories.UsuarioRepository;
+// import com.cefet.ds_projeto.repositories.UsuarioRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -19,13 +19,15 @@ public class DespesaService {
     @Autowired
 	private DespesaRepository despesaRepository;
 
+	/* 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
     @Autowired
 	private UsuarioRepository usuarioRepository;
+	*/
 
-    // Buscar todos
+    // Listar
 	public List<DespesaDTO> findAll(){
 	List<Despesa> listaDespesas = despesaRepository.findAll();
 	return listaDespesas.stream().map(DespesaDTO::new).toList();
@@ -35,19 +37,20 @@ public class DespesaService {
 	public DespesaDTO findById(Long id) {
 		Despesa despesa = despesaRepository.findById(id)
 				.orElseThrow(() -> new EntityNotFoundException("Despesa não encontrada com ID: " + id));
-				return new DespesaDTO(despesa);
+		return new DespesaDTO(despesa);
 	}
 	
 	// Inserir Despesa
 	public DespesaDTO insert(DespesaDTO despesaDTO) {
-		
+	
+		/* 
 	Usuario usuario = usuarioRepository.findById(despesaDTO.getUsuarioId())
 		.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrada com ID: " +
 		 despesaDTO.getUsuarioId()));
 	
 	Categoria categoria = categoriaRepository.findById(despesaDTO.getCategoriaId())
 		.orElseThrow(() -> new EntityNotFoundException("Categoria não encontrada com ID: " +
-		 despesaDTO.getCategoriaId()));
+		 despesaDTO.getCategoriaId())); */
 	
 	Despesa despesa = new Despesa();
 	despesa.setDescricao(despesaDTO.getDescricao());
@@ -55,8 +58,8 @@ public class DespesaService {
     despesa.setDataPagamento(despesaDTO.getDataPagamento());
     despesa.setSituacao(despesaDTO.getSituacao());
     despesa.setValor(despesaDTO.getValor());
-	despesa.setCategoria(categoria);
-    despesa.setUsuario(usuario);
+	despesa.setCategoria(despesaDTO.getCategoria());
+    despesa.setUsuario(despesaDTO.getUsuario());
 	Despesa despesaSalvo = despesaRepository.save(despesa);
 	return new DespesaDTO(despesaSalvo);
 	} 
@@ -66,15 +69,17 @@ public class DespesaService {
 		Despesa despesa = despesaRepository.findById(id)
 		.orElseThrow(() -> new EntityNotFoundException("Despesa não encontrada com ID: " + id));
 		
-        Usuario usuario = usuarioRepository.findById(despesaDTO.getUsuarioId())
-		.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " +
-		despesaDTO.getUsuarioId()));
+       // Usuario usuario = usuarioRepository.findById(despesaDTO.getUsuario())
+		//.orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com ID: " +
+		//despesaDTO.getUsuarioId()));
         despesa.setDescricao(despesaDTO.getDescricao());
         despesa.setDataVencimento(despesaDTO.getDataVencimento());
         despesa.setDataPagamento(despesaDTO.getDataPagamento());
         despesa.setSituacao(despesaDTO.getSituacao());
         despesa.setValor(despesaDTO.getValor());
-        despesa.setUsuario(usuario);
+		despesa.setCategoria(despesaDTO.getCategoria());
+		despesa.setUsuario(despesaDTO.getUsuario());
+      //  despesa.setUsuario(usuario);
 		
 		Despesa despesaAtualizado = despesaRepository.save(despesa);
 		return new DespesaDTO(despesaAtualizado);
@@ -87,6 +92,8 @@ public class DespesaService {
 		}
 		despesaRepository.deleteById(id);
 	} 
+
+	/* 
 	  public List<DespesaDTO> findByUsuarioId(Long usuarioId) {
         return despesaRepository.findByUsuarioId(usuarioId).stream()
             .map(DespesaDTO::new).toList();
@@ -97,4 +104,6 @@ public class DespesaService {
         return despesaRepository.findByCategoriaId(categoriaId).stream()
             .map(DespesaDTO::new).toList();
 		}
+	*/
+
 	}

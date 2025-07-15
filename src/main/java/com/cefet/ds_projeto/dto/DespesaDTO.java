@@ -2,7 +2,9 @@ package com.cefet.ds_projeto.dto;
 
 import java.time.LocalDate;
 
+import com.cefet.ds_projeto.entities.Categoria;
 import com.cefet.ds_projeto.entities.Despesa;
+import com.cefet.ds_projeto.entities.Usuario;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -29,10 +31,10 @@ public class DespesaDTO {
     private Double valor;
 
     @Schema(description = "ID da categoria associada à despesa", example = "3")
-    private Long categoriaId;
+    private Categoria categoria;
 
     @Schema(description = "ID do usuário responsável pela despesa", example = "1")
-    private Long usuarioId;
+    private Usuario usuario;
 
     public DespesaDTO() {
 
@@ -45,8 +47,8 @@ public class DespesaDTO {
         this.dataPagamento = despesa.getDataPagamento();
         this.situacao = despesa.getSituacao();
         this.valor = despesa.getValor();
-        this.categoriaId = despesa.getCategoria().getId();
-        this.usuarioId = despesa.getUsuario().getId();
+        this.categoria = despesa.getCategoria();
+        this.usuario = despesa.getUsuario();
 
     }
 
@@ -74,12 +76,12 @@ public class DespesaDTO {
         return valor;
     }
 
-    public Long getCategoriaId(){
-        return categoriaId;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
     
 }

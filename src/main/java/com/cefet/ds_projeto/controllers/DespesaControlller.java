@@ -69,6 +69,7 @@ public class DespesaControlller {
 	return ResponseEntity.noContent().build();
 	}
 
+	/* 
 	@GetMapping("/usuario/{usuarioId}")
 	@Operation(summary = "Listar despesas por usuário", description = "Retorna todas as despesas associadas a um usuário específico.")
     public ResponseEntity<List<DespesaDTO>> findByUsuarioId(
@@ -86,4 +87,5 @@ public class DespesaControlller {
         List<DespesaDTO> despesas = despesaService.findByCategoriaId(categoriaId);
         return ResponseEntity.ok(despesas);
     }
+	*/
 }
