@@ -38,7 +38,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String login, String senha, NivelAcesso nivelAcesso) {
+    public Usuario(Long id, String nome, String email, String login, String senha, NivelAcesso nivelAcesso, String urlImagem) {
         this.id = id;
         this.nome = nome;
         this.email = email;

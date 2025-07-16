@@ -17,7 +17,4 @@ public class DsProjetoApplication {
 	        String hash = encoder.encode("123456");
 	        System.out.println(hash);
 	}
-
-	
-
 }
