@@ -2,7 +2,9 @@ package com.cefet.ds_projeto.dto;
 
 import java.time.LocalDate;
 
+import com.cefet.ds_projeto.entities.Categoria;
 import com.cefet.ds_projeto.entities.Receita;
+import com.cefet.ds_projeto.entities.Usuario;
 
 import io.swagger.v3.oas.annotations.media.Schema; 
 
@@ -20,10 +22,10 @@ public class ReceitaDTO {
     private Double valor;
 
     @Schema(description = "ID da categoria associada a esta receita", example = "101")
-    private Long categoriaId;
+    private Categoria categoria;
 
     @Schema(description = "ID do usuário que registrou a receita", example = "201")
-    private Long usuarioId;
+    private Usuario usuario;
 
     public ReceitaDTO() {
     }
@@ -32,8 +34,8 @@ public class ReceitaDTO {
         this.id = receita.getId();
         this.dataEntrada = receita.getDataEntrada();
         this.valor = receita.getValor();
-        this.categoriaId = receita.getCategoria().getId();
-        this.usuarioId = receita.getUsuario().getId();
+        this.categoria = receita.getCategoria();
+        this.usuario = receita.getUsuario();
     }
 
     public Long getId() {
@@ -49,11 +51,11 @@ public class ReceitaDTO {
         return valor;
     }
 
-    public Long getCategoriaId() {
-        return categoriaId;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public Long getUsuarioId() {
-        return usuarioId;
+    public Usuario getUsuario() {
+        return usuario;
     }
 }

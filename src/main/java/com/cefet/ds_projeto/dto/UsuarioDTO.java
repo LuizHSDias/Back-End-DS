@@ -41,7 +41,7 @@ public class UsuarioDTO {
         this.login = usuario.getLogin();
         this.senha = usuario.getSenha();
         this.nivelAcesso = usuario.getNivelAcesso();
-         this.urlImagem = usuario.getUrlImagem();
+        this.urlImagem = usuario.getUrlImagem();
     }
 
     public Long getId() {
