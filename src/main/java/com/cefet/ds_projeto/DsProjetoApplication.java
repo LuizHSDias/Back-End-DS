@@ -9,6 +9,12 @@ public class DsProjetoApplication {
 
 	// DOCUMENTAÇÃO PROJETO 
 	// http://localhost:8080/swagger-ui/index.html#/
+
+	// BANCO DE DADOS 
+	// https://ds-projeto.onrender.com/ 
+
+	// APLICAÇÃO FRONT-END NETFLY 
+	// https://ds-projeto.netlify.app/ 
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DsProjetoApplication.class, args);
