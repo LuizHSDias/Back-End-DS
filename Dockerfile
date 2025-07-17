@@ -1,26 +1,30 @@
-# Etapa de build
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+# Etapa de build com Java 21 e Maven
+FROM ubuntu:latest AS build
 
-# Cria diretório de trabalho
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y wget gnupg2 software-properties-common
+
+# Adiciona o repositório do Eclipse Temurin para Java 21
+RUN wget -O- https://packages.adoptium.net/artifactory/api/gpg/key/public | gpg --dearmor > /etc/apt/trusted.gpg.d/adoptium.gpg && \
+    add-apt-repository --yes https://packages.adoptium.net/artifactory/deb jammy main && \
+    apt-get update && \
+    apt-get install -y temurin-21-jdk maven
+
 WORKDIR /app
 
-# Copia os arquivos do projeto
 COPY . .
 
-# Compila o projeto e gera o JAR
-RUN mvn clean package -DskipTests
+RUN mvn clean install -DskipTests
 
-# Etapa de execução
-FROM eclipse-temurin:21-jdk
+# Etapa de runtime com Java 21
+FROM eclipse-temurin:21-jdk-jammy
 
-# Define diretório de trabalho
 WORKDIR /app
 
-# Expõe a porta 8080 (ou a que você usa)
 EXPOSE 8080
 
-# Copia o JAR gerado na etapa anterior
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/ds-guia12-0.0.1-SNAPSHOT.jar app.jar
 
-# Comando de execução
 ENTRYPOINT ["java", "-jar", "app.jar"]
