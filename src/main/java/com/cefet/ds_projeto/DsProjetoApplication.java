@@ -11,7 +11,7 @@ public class DsProjetoApplication {
 	// http://localhost:8080/swagger-ui/index.html#/
 
 	// BANCO DE DADOS 
-	// https://ds-projeto.onrender.com/ 
+	// https://ds-projeto-back.onrender.com
 
 	// APLICAÇÃO FRONT-END NETFLY 
 	// https://ds-projeto.netlify.app/ 
