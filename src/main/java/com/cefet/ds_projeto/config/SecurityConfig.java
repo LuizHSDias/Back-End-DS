@@ -39,7 +39,7 @@ public class SecurityConfig {
                 .requestMatchers("/h2-console/**").permitAll() // Acessa ao H2 Console
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Acessa ao Swagger UI
                 
-               .requestMatchers(HttpMethod.POST,"auth").permitAll() // Permitir login de usuário
+               .requestMatchers(HttpMethod.POST,"/auth").permitAll() // Permitir login de usuário
 
                 // acesso as imagens salvas
                 .requestMatchers(HttpMethod.GET, "/imagens/**").permitAll()
@@ -111,7 +111,7 @@ public class SecurityConfig {
 	      @Override
 	      public void addCorsMappings(CorsRegistry registry) {
 	        registry.addMapping("/**")
-	          .allowedOrigins("http://localhost:4200", "https://ds-projeto.netlify.app/")
+	          .allowedOrigins("http://localhost:4200", "https://ds-projeto.netlify.app")
 	          .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 	          .allowedHeaders("*")
 	          .allowCredentials(true);
