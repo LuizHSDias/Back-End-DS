@@ -37,7 +37,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/h2-console/**").permitAll() // Acessa ao H2 Console
-                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Acessa ao Swagger UI
+                .requestMatchers("/v3/api-docs/*", "/swagger-ui/*", "/swagger-ui.html").permitAll() // Acessa ao Swagger UI
                 
                .requestMatchers(HttpMethod.POST,"/auth").permitAll() // Permitir login de usuário
 
